@@ -66,7 +66,7 @@ MVN_impute  <- function( Y, reltol=1e-4, intercept=TRUE, maxit=1e2, trace=FALSE 
       mu	<- colMeans( Yhat )
     
     mu.mat    <- matrix( mu, N, P, byrow=TRUE )
-    S.part.1  <- 1/N * t(Yhat - mu.mat)%*%(Yhat - mu.mat)
+    S.part.1  <- 1/N * t(Yhat - mu.mat) %*% (Yhat - mu.mat)
     Sigma     <- S.part.1 + 1/N * apply( Sig.n, 2:3, sum )
   }
   return(list(Y=Yhat,Sigma=Sigma))

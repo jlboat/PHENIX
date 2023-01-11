@@ -55,7 +55,7 @@ phenix_vb <- function( Y, Q, lam_K, N=nrow(Y), P=ncol(Y), M=min(c(N,P)),
   mu_Y    	<- out$Y
   Omega.inv	<- out$Sigma
   Omega		<- solve(Omega.inv)
-  svd.Omega	<- svd(Omega,LINPACK=TRUE)
+  svd.Omega	<- svd(Omega)
  
   if( n.miss.types == 0 ){
     Sigma_Y	<- array( 0, dim=c( 2, P, P ) )
@@ -68,7 +68,7 @@ phenix_vb <- function( Y, Q, lam_K, N=nrow(Y), P=ncol(Y), M=min(c(N,P)),
   }
   
 ####### Initialize S and beta
-  out		<- svd( mu_Y, LINPACK=TRUE )
+  out		<- svd( mu_Y)
   mu_S		<- ( out$u %*% diag(sqrt(out$d))    )[ , 1:M ]
   mu_beta	<- ( diag(sqrt(out$d)) %*% t(out$v) )[ 1:M,  ]
    
@@ -95,11 +95,11 @@ phenix_vb <- function( Y, Q, lam_K, N=nrow(Y), P=ncol(Y), M=min(c(N,P)),
     Omega_beta 	    <- Omega
     svd.Omega_beta  <- svd.Omega
     V_S		    <- t(mu_S) %*% mu_S + trp_KS( svd.keep=svd.V_beta, lam.kill=1/lam_K )
-    svd.V_S	    <- svd( V_S, LINPACK=TRUE )
+    svd.V_S	    <- svd( V_S)
     mu_beta	    <- KS_dot_vec( svd.C = list( u=svd.Omega$u, d=tau/svd.Omega$d ), svd.A = svd.V_S, B=t(mu_S) %*% mu_Y, inv=TRUE )
     ############### S
     V_beta	    <- mu_beta %*% Omega %*% t(mu_beta) + trp_KS( lam.kill = tau/svd.Omega$d, svd.keep=svd.V_S )
-    svd.V_beta	    <- svd(V_beta,LINPACK=TRUE)
+    svd.V_beta	    <- svd(V_beta)
     mu_S	    <- KS_dot_vec( svd.C = svd.V_beta, svd.A = list( u = Q, d = 1/lam_K ), B = mu_Y %*% Omega %*% t(mu_beta), inv=TRUE )
 
     ############### beta, again
@@ -116,7 +116,7 @@ phenix_vb <- function( Y, Q, lam_K, N=nrow(Y), P=ncol(Y), M=min(c(N,P)),
       Delta	    <- solve( Omega_beta ) * M
     }
     Omega.inv	    <- 1/eprime * ( t(mu_Y.d)%*%mu_Y.d + apply( Sigma_Y, 2:3, sum ) + t(mu_beta)%*%trp.s%*%mu_beta + Delta + E.inv )
-    svd.Omega.inv   <- svd(Omega.inv,LINPACK=TRUE)
+    svd.Omega.inv   <- svd(Omega.inv)
     svd.Omega	    <- list( u = svd.Omega.inv$u, d=1/svd.Omega.inv$d )
     Omega	    <- svd.Omega$u %*% diag(svd.Omega$d) %*% t(svd.Omega$u)
     ################################### Update Y  	

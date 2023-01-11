@@ -1,8 +1,8 @@
 Package: phenix
 Type: Package
 Title: Missing Phenotype Imputation
-Version: 1.0
-Date: 2014-10-03
+Version: 1.0.1
+Date: 2022-11-02
 Author: Andy Dahl
 Maintainer: Andy Dahl <andywdahl@gmail.com>
 Description: Estimates the missing entries in a matrix of phenotypes using
@@ -10,4 +10,4 @@ Description: Estimates the missing entries in a matrix of phenotypes using
     values and trait heritabilities.
 License: file LICENSE
 NeedsCompilation: no
-Packaged: 2016-04-14 11:48:24 UTC; dahl
+Packaged: 2022-11-02; jlb
